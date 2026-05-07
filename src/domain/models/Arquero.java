@@ -1,5 +1,7 @@
 package domain.models;
 
+import domain.enums.ClasesPersonajes;
+
 public class Arquero extends Personaje{
     
     private final int flechasMaximas;
@@ -11,11 +13,12 @@ public class Arquero extends Personaje{
         String nombrePersonaje,
         int vidaMaxima, 
         int vidaActual, 
+        ClasesPersonajes personaje,
         int poderAtaque, 
         int defensa, 
         int flechasMaximas, 
         int cantidadFlechas){
-        super(nombrePersonaje, vidaMaxima, vidaActual, poderAtaque, defensa);
+        super(nombrePersonaje, vidaMaxima, personaje, vidaActual, poderAtaque, defensa);
         this.flechasMaximas = flechasMaximas;
         this.cantidadFlechas = cantidadFlechas;
     }
