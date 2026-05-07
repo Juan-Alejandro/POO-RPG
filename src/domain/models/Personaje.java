@@ -1,8 +1,11 @@
 package domain.models;
 
+import domain.enums.ClasesPersonajes;
+
 public abstract class Personaje {
     private final String nombrePersonaje;
     private final int vidaMaxima;
+    private final ClasesPersonajes personaje;
     private int vidaActual;
     private int poderAtaque;
     private final int defensa;
@@ -12,12 +15,14 @@ public abstract class Personaje {
     public Personaje(
         String nombrePersonaje, 
         int vidaMaxima,
+        ClasesPersonajes personaje,
         int vidaActual,
         int poderAtaque,
         int defensa){
 
             this.nombrePersonaje = nombrePersonaje;
             this.vidaMaxima = vidaMaxima;
+            this.personaje = personaje;
             this.vidaActual = vidaActual;
             this.poderAtaque = poderAtaque;
             this.defensa = defensa;
@@ -47,6 +52,9 @@ public abstract class Personaje {
         return vidaMaxima;
     }
 
+    public ClasesPersonajes getPersonaje() {
+        return personaje;
+    }
 
     /*Abstracts */
     public abstract void recibirDanio();
@@ -68,12 +76,16 @@ public abstract class Personaje {
 
     // Impresion de estadisticas
     public void mostrarStats() {
-
+        
     }
 
 
     @Override
     public String toString() {
-        return "Personaje:"
+        return "Personaje: " + 
+        "\nNombre: " + nombrePersonaje +
+        "\nVida maxima: " + vidaMaxima +
+        "\nVida Actual: " + vidaActual + 
+        "\nClase: " + personaje;
     }
 }
