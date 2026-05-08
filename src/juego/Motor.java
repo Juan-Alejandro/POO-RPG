@@ -11,9 +11,6 @@ import java.util.Scanner;
 
 public class Motor {
 
-    // Instancias de clases
-    static PantallasAscii pantallasAscii = new PantallasAscii();
-    static JuegoPrincipal juegoPrincipal = new JuegoPrincipal();
 
     static Scanner skan = new Scanner(System.in);
 
