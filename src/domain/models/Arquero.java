@@ -1,10 +1,12 @@
 package domain.models;
 
+import domain.enums.BandoPersonaje;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
+import domain.enums.TiposPersonajes;
 import domain.util.interfaces.HabilidadEspecial;
 
-public class Arquero extends Personaje implements HabilidadEspecial{
+public class Arquero extends Personaje implements HabilidadEspecial {
 
     private final int flechasMaximas;
     private int cantidadFlechas;
@@ -15,11 +17,14 @@ public class Arquero extends Personaje implements HabilidadEspecial{
             int vidaActual,
             ClasesPersonajes personaje,
             EstadoPersonaje estadoPersonaje,
+            BandoPersonaje bandoPersonaje,
+            TiposPersonajes tiposPersonajes,
             int poderAtaque,
             int defensa,
             int flechasMaximas,
             int cantidadFlechas) {
-        super(nombrePersonaje, vidaMaxima, personaje,estadoPersonaje, vidaActual, poderAtaque, defensa);
+        super(nombrePersonaje, vidaMaxima, vidaActual, personaje, estadoPersonaje, bandoPersonaje, tiposPersonajes,
+                poderAtaque, defensa);
         this.flechasMaximas = flechasMaximas;
         this.cantidadFlechas = cantidadFlechas;
     }
@@ -44,23 +49,53 @@ public class Arquero extends Personaje implements HabilidadEspecial{
         restarFlechas();
     }
 
+    @Override
+    public void habilidades(Personaje enemigo) {
+
+        switch (this.getTiposPersonajes()) {
+            case TiposPersonajes.ORO:
+
+                break;
+
+            case TiposPersonajes.ESPADA:
+                System.out.println("Rafaga de flechas ");
+                int flechasEnviadas = (int) (Math.random() * 5) + 1;
+                System.out.println(flechasEnviadas);
+                enemigo.recibirDanio(getPoderAtaque() * flechasEnviadas);
+
+                this.cantidadFlechas -= flechasEnviadas;
+                break;
+
+            case TiposPersonajes.COPA:
+
+                break;
+
+            case TiposPersonajes.BASTO:
+
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    @Override
+    public void habilidadBase(Personaje enemigo) {
+
+    }
+
+    @Override
+    public void usarHabilidadEspecial(Personaje enemigo) {
+
+    }
+
+
     // Impresion de datos
     @Override
     public String toString() {
         return super.toString() +
                 "\nFlechas maximas: " + flechasMaximas +
                 "\nCantidad de flechas disponibles: " + cantidadFlechas;
-    }
-
-    @Override
-    public void habilidadEspecial(Personaje enemigo) {
-        System.out.println("Rafaga de flechas ");
-        int flechasEnviadas = (int)(Math.random()*5) + 1;
-        System.out.println(flechasEnviadas);
-        enemigo.recibirDanio(getPoderAtaque()*flechasEnviadas);
-
-        this.cantidadFlechas -= flechasEnviadas;
-        
     }
 
 }

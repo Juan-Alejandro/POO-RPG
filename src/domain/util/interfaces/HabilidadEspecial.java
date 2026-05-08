@@ -3,5 +3,7 @@ package domain.util.interfaces;
 import domain.models.Personaje;
 
 public interface HabilidadEspecial {
-    void habilidadEspecial(Personaje enemigo);
+    void habilidades(Personaje enemigo);
+    void habilidadBase(Personaje enemigo);
+    void usarHabilidadEspecial(Personaje enemigo);
 } 
