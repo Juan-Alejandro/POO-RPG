@@ -1,13 +1,17 @@
 package domain.models;
 
+import domain.enums.BandoPersonaje;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
+import domain.enums.TiposPersonajes;
 
 public abstract class Personaje {
     private final String nombrePersonaje;
     private final int vidaMaxima;
     private final ClasesPersonajes personaje;
     private EstadoPersonaje estadoPersonaje;
+    private BandoPersonaje bandoPersonaje;
+    private TiposPersonajes tiposPersonajes;
     private int vidaActual;
     private int poderAtaque;
     private final int defensa;
@@ -17,17 +21,21 @@ public abstract class Personaje {
     public Personaje(
         String nombrePersonaje, 
         int vidaMaxima,
+        int vidaActual,
         ClasesPersonajes personaje,
         EstadoPersonaje estadoPersonaje,
-        int vidaActual,
+        BandoPersonaje bandoPersonaje,
+        TiposPersonajes tiposPersonajes,
         int poderAtaque,
         int defensa){
 
             this.nombrePersonaje = nombrePersonaje;
             this.vidaMaxima = vidaMaxima;
+            this.vidaActual = vidaActual;
+            this.bandoPersonaje  = bandoPersonaje;
             this.personaje = personaje;
             this.estadoPersonaje = estadoPersonaje;
-            this.vidaActual = vidaActual;
+            this.tiposPersonajes = tiposPersonajes;
             this.poderAtaque = poderAtaque;
             this.defensa = defensa;
     }
@@ -58,6 +66,24 @@ public abstract class Personaje {
 
     public ClasesPersonajes getPersonaje() {
         return personaje;
+    }
+
+    public BandoPersonaje getBandoPersonaje() {
+        return bandoPersonaje;
+    }
+
+    public EstadoPersonaje getEstadoPersonaje() {
+        return estadoPersonaje;
+    }
+
+    public TiposPersonajes getTiposPersonajes() {
+        return tiposPersonajes;
+    }
+
+    //Setters
+
+    public void setVidaActual(int vidaCurada) {
+        this.vidaActual = vidaCurada;
     }
 
     /*Abstracts */
@@ -110,6 +136,8 @@ public abstract class Personaje {
         "\nVida maxima: " + vidaMaxima +
         "\nVida Actual: " + vidaActual + 
         "\nClase: " + personaje +
+        "\nBando del personaje: " + bandoPersonaje +
+        "\nTipo del personaje: " + tiposPersonajes +
         "\nEstado: " + estadoPersonaje +
         "\nPoder de ataque: " + poderAtaque +
         "\nDefensa: " + defensa +
