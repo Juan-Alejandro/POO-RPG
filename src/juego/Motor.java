@@ -3,125 +3,87 @@ package juego;
 import java.util.Scanner;
 
 import domain.enums.ClasesPersonajes;
+import domain.enums.EstadoPersonaje;
 import domain.models.Arquero;
-import domain.models.Personaje;
+import domain.models.Orco;
+
+import java.util.Scanner;
 
 public class Motor {
 
-    static Motor motor = new Motor();
+    // Instancias de clases
+    static PantallasAscii pantallasAscii = new PantallasAscii();
+    static JuegoPrincipal juegoPrincipal = new JuegoPrincipal();
+
     static Scanner skan = new Scanner(System.in);
-    public static byte opcUser;
 
-    boolean terminadorBucle = true;
+    static boolean terminadorBucles = false;
 
-    //Objetos de los personajes
-    Arquero arquero;
-   
-    
-    ClasesPersonajes personaje;
+    static byte opcionUsuario;
 
-    String nomPer;
+    // Personajes
 
-    // Elementos arquero
     
 
+    static Arquero arquero = new Arquero(
+            "As",
+            50,
+            50,
+            ClasesPersonajes.ARQUERO,
+            EstadoPersonaje.VIVO,
+            10,
+            30,
+            20,
+            20);
+
+    static Orco orco = new Orco(
+        "Orco", 
+        50, 
+        50, 
+        ClasesPersonajes.ORCO, 
+        EstadoPersonaje.VIVO,
+        30, 
+        9);
 
     public static void main(String[] args) {
+        //pantallaPrincipal();
 
-        motor.menuPrincipal();
+
+        arquero.habilidadEspecial(orco);
+
+
+        System.out.println(orco);
+
+        System.out.println(arquero);
     }
 
-    public void menuPrincipal() {
+    /*
 
+    static void pantallaPrincipal() {
         do {
-            System.out.println(
-                    "==============================================" +
-                            "\n            Bienvenido a BriscaPege          " +
-                            "\n                Menu de opciones:            " +
-                            "\n            >> [1] Iniciar                   " +
-                            "\n            >> [2] Como jugar                " +
-                            "\n            >> [3] Creditos                  " +
-                            "\n==============================================");
+            pantallasAscii.pantallaMenu();
+            opcionUsuario = skan.nextByte();
 
-            opcUser = skan.nextByte();
-            switch (opcUser) {
+            switch (opcionUsuario) {
                 case 1:
-                    motor.inicioJuego();
-                    terminadorBucle = false;
-                    break;
-                case 2:
-                    motor.comoJugar();
-                    terminadorBucle = false;
-                    break;
 
-                case 3:
-                    motor.listaCreditos();
-                    terminadorBucle = false;
-                    break;
-                default:
-                    System.out.println("Opcion no disponible");
-                    break;
-            }
-        } while (terminadorBucle);
-    }
-
-    public void inicioJuego() {
-
-        do {
-            System.out.println("Crea tus personajes (Minimo 2, Maximo 4)" +
-                    "\nElige entre:" +
-                    "\n[1]Arquero" +
-                    "\n[2]Guerrero" +
-                    "\n[3]Mago" +
-                    "\n[4]Curandero");
-
-            opcUser = skan.nextByte();
-
-            switch (opcUser) {
-                case 1:
-                    System.out.println("Como desea nombrar a su personaje: ");
-                    nomPer = skan.next();
-
-
-                    arquero = new Arquero(
-                        nomPer, 
-                        100,
-                        100,
-                        personaje.ARQUERO, 
-                        2,
-                        20, 
-                        40, 
-                        40);
-                    terminadorBucle = false;
+                    terminadorBucles = false;
                     break;
                 case 2:
 
-                    terminadorBucle = false;
+                    terminadorBucles = false;
                     break;
                 case 3:
 
-                    terminadorBucle = false;
-                    break;
-                case 4:
-
-                    terminadorBucle = false;
+                    terminadorBucles = false;
                     break;
                 default:
+                    System.out.println("Opcion no valida");
+                    terminadorBucles = true;
                     break;
             }
-        } while (terminadorBucle);
+        } while (terminadorBucles);
 
-    }
-
-
-
-
-    public void comoJugar() {
-
-    }
-
-    public void listaCreditos() {
-
-    }
+    }*/
 
 }
