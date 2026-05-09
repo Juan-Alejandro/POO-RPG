@@ -26,50 +26,21 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
 
     @Override
     public void atacar(Personaje enemigo) {
-        System.out.println("Golpe de ");
+        System.out.println("Golpe de arma");
         enemigo.recibirDanio(getPoderAtaque());
     }
 
-    @Override
-    public void habilidades(Personaje enemigo) {
 
-        switch (this.getTiposPersonajes()) {
-            case TiposPersonajes.ORO:
-                
-                break;
-
-            case TiposPersonajes.ESPADA:
-
-                break;
-
-            case TiposPersonajes.COPA:
-
-                break;
-            
-            case TiposPersonajes.BASTO:
-                System.out.println("Daño duplicado ");
-                enemigo.recibirDanio((getPoderAtaque()*2));
-                break;
-            default:
-                break;
-        }
-
-        
-    }
-
-    @Override
-    public void habilidadBase(Personaje enemigo){
-
-    }
 
     @Override
     public void usarHabilidadEspecial(Personaje enemigo) {
 
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    @Override 
+    public String toString(){
+        return super.toString() +
+            "\n\n";
     }
 
 }

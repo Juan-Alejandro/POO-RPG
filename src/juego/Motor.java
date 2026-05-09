@@ -1,99 +1,98 @@
 package juego;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
-import domain.enums.BandoPersonaje;
-import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
-import domain.enums.TiposPersonajes;
 import domain.models.Arquero;
+import domain.models.Curandero;
 import domain.models.Guerrero;
+import domain.models.Mago;
 import domain.models.Orco;
-
-import java.util.Scanner;
+import domain.models.Personaje;
 
 public class Motor {
 
-    static Scanner skan = new Scanner(System.in);
-
-    static boolean terminadorBucles = false;
-
-    static byte opcionUsuario;
-
-    // Personajes
-
-    static Arquero arquero = new Arquero(
-            "As",
-            50,
-            50,
-            ClasesPersonajes.ARQUERO,
-            EstadoPersonaje.VIVO,
-            BandoPersonaje.ALIADO,
-            TiposPersonajes.BASTO,
-            50,
-            30,
-            20,
-            20);
-
-    static Orco orco = new Orco(
-            "Orco",
-            50,
-            50,
-            ClasesPersonajes.ORCO,
-            EstadoPersonaje.VIVO,
-            BandoPersonaje.ENEMIGO,
-            TiposPersonajes.ORCO,
-            30,
-            9);
-
-    static Guerrero guerrero = new Guerrero(
-            "Joaquin",
+    // Objetos de los personajes
+    static Arquero arquero = new Arquero("Arquero",
             100,
             100,
-            ClasesPersonajes.GUERRERO,
+            null,
             EstadoPersonaje.VIVO,
-            BandoPersonaje.ALIADO,
-            TiposPersonajes.COPA,
-            20,
-            20);
+            null,
+            null,
+            500,
+            0,
+            0,
+            0);
+
+    static Guerrero guerrero = new Guerrero("Guerrero",
+            0,
+            0,
+            null,
+            null,
+            null,
+            null,
+            0,
+            0);
+
+    static Mago mago = new Mago("Mago",
+            0,
+            0,
+            null,
+            null,
+            null,
+            null,
+            0,
+            0);
+
+    static Curandero curandero = new Curandero("Curandero",
+            0,
+            0,
+            null,
+            null,
+            null,
+            null,
+            0,
+            0,
+            0);
+
+    static Orco orco = new Orco("Orco",
+            1000,
+            1000,
+            null,
+            EstadoPersonaje.VIVO,
+            null,
+            null,
+            0,
+            0);
+
+    static List<Personaje> person = new ArrayList<>();
+
+    static Batalla batalla = new Batalla(person);
+    static SistemaAtaqueOrco sistemaAtaqueOrco = new SistemaAtaqueOrco(person);
+
 
     public static void main(String[] args) {
-        System.out.println(guerrero);
 
-        guerrero.habilidades(orco);
+        anadirPersonajes();
+        batalla.juegoPrincipal();
 
-        System.out.println(orco);
 
     }
 
-    /*
-     * 
-     * static void pantallaPrincipal() {
-     * do {
-     * pantallasAscii.pantallaMenu();
-     * opcionUsuario = skan.nextByte();
-     * 
-     * switch (opcionUsuario) {
-     * case 1:
-     * 
-     * terminadorBucles = false;
-     * break;
-     * case 2:
-     * 
-     * terminadorBucles = false;
-     * break;
-     * case 3:
-     * 
-     * terminadorBucles = false;
-     * break;
-     * default:
-     * System.out.println("Opcion no valida");
-     * terminadorBucles = true;
-     * break;
-     * }
-     * } while (terminadorBucles);
-     * 
-     * }
-     */
 
+
+
+    static List<Personaje> anadirPersonajes() {
+        // Aqui se aniaden los personajes a una lista
+
+        person.add(arquero); // 0 
+        person.add(guerrero); // 1
+        person.add(mago); // 2
+        person.add(curandero); // 3
+        person.add(orco); // 4
+
+        return person;
+    }
 }
