@@ -86,7 +86,9 @@ public abstract class Personaje {
         this.vidaActual = vidaCurada;
     }
 
-    /*Abstracts */
+
+
+
     public void recibirDanio(int cantidad){
         int danioRecibido = cantidad - this.defensa;
 
@@ -107,28 +109,18 @@ public abstract class Personaje {
             estadoPersonaje +
             "\n");
     }
+
     public abstract void atacar(Personaje enemigo);
 
 
-    // Curar vida
-    public void curarVida() {
 
+    // Curar vida
+    public void curarVida(int cantidad) {
+        this.vidaActual += cantidad;
+        if(this.vidaActual > vidaMaxima) this.vidaActual = vidaMaxima;
     }
 
     
-    // Estado del personaje 
-    public void estatusVida() {
-
-    }
-
-
-
-    // Impresion de estadisticas
-    public void mostrarStats() {
-        
-    }
-
-
      @Override
     public String toString() {
         return "Personaje: " + 
@@ -140,7 +132,6 @@ public abstract class Personaje {
         "\nTipo del personaje: " + tiposPersonajes +
         "\nEstado: " + estadoPersonaje +
         "\nPoder de ataque: " + poderAtaque +
-        "\nDefensa: " + defensa +
-        "\n";
+        "\nDefensa: " + defensa;
     }
 }

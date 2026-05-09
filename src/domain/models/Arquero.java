@@ -44,45 +44,12 @@ public class Arquero extends Personaje implements HabilidadEspecial {
     @Override
     public void atacar(Personaje enemigo) {
         System.out.println("Flecha disparada\n");
-
+        
         enemigo.recibirDanio(getPoderAtaque());
         restarFlechas();
     }
 
-    @Override
-    public void habilidades(Personaje enemigo) {
 
-        switch (this.getTiposPersonajes()) {
-            case TiposPersonajes.ORO:
-
-                break;
-
-            case TiposPersonajes.ESPADA:
-                System.out.println("Rafaga de flechas ");
-                int flechasEnviadas = (int) (Math.random() * 5) + 1;
-                System.out.println(flechasEnviadas);
-                enemigo.recibirDanio(getPoderAtaque() * flechasEnviadas);
-
-                this.cantidadFlechas -= flechasEnviadas;
-                break;
-
-            case TiposPersonajes.COPA:
-
-                break;
-
-            case TiposPersonajes.BASTO:
-
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    @Override
-    public void habilidadBase(Personaje enemigo) {
-
-    }
 
     @Override
     public void usarHabilidadEspecial(Personaje enemigo) {
@@ -95,7 +62,8 @@ public class Arquero extends Personaje implements HabilidadEspecial {
     public String toString() {
         return super.toString() +
                 "\nFlechas maximas: " + flechasMaximas +
-                "\nCantidad de flechas disponibles: " + cantidadFlechas;
+                "\nCantidad de flechas disponibles: " + cantidadFlechas +
+                "\n\n";
     }
 
 }

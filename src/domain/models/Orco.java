@@ -27,29 +27,22 @@ public class Orco extends Personaje implements HabilidadEspecial {
 
     @Override
     public void atacar(Personaje enemigo) {
-
+        System.out.println("Orcotaque ");
+        enemigo.recibirDanio(getPoderAtaque());
+        
     }
 
 
-
-
-    @Override
-    public void habilidades(Personaje enemigo) {
-
-        if(this.getVidaActual() <= 0) return;
-
-        System.out.println("Comelon");
-        setVidaActual(this.getVidaMaxima());
-    }
 
 
     @Override
     public void usarHabilidadEspecial(Personaje enemigo) {
-
+        
     }
 
-    @Override
-    public void habilidadBase(Personaje enemigo) {
-
+    @Override 
+    public String toString(){
+        return super.toString() +
+            "\n\n";
     }
 }
