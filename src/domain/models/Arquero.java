@@ -8,9 +8,6 @@ import domain.util.interfaces.HabilidadEspecial;
 
 public class Arquero extends Personaje implements HabilidadEspecial {
 
-    private final int flechasMaximas;
-    private int cantidadFlechas;
-
     public Arquero(
             String nombrePersonaje,
             int vidaMaxima,
@@ -20,33 +17,17 @@ public class Arquero extends Personaje implements HabilidadEspecial {
             BandoPersonaje bandoPersonaje,
             TiposPersonajes tiposPersonajes,
             int poderAtaque,
-            int defensa,
-            int flechasMaximas,
-            int cantidadFlechas) {
+            int defensa) {
         super(nombrePersonaje, vidaMaxima, vidaActual, personaje, estadoPersonaje, bandoPersonaje, tiposPersonajes,
                 poderAtaque, defensa);
-        this.flechasMaximas = flechasMaximas;
-        this.cantidadFlechas = cantidadFlechas;
     }
 
-    public int getFlechasMaximas() {
-        return flechasMaximas;
-    }
-
-    public int getCantidadFlechas() {
-        return cantidadFlechas;
-    }
-
-    public void restarFlechas() {
-        this.cantidadFlechas -= 1;
-    }
 
     @Override
     public void atacar(Personaje enemigo) {
         System.out.println("Flecha disparada\n");
         
         enemigo.recibirDanio(getPoderAtaque());
-        restarFlechas();
     }
 
 
@@ -56,14 +37,15 @@ public class Arquero extends Personaje implements HabilidadEspecial {
 
     }
 
+    @Override
+    public void poderMagico(Personaje objetivo) {
+        
+    }
 
     // Impresion de datos
     @Override
     public String toString() {
-        return super.toString() +
-                "\nFlechas maximas: " + flechasMaximas +
-                "\nCantidad de flechas disponibles: " + cantidadFlechas +
-                "\n\n";
+        return super.toString();
     }
 
 }

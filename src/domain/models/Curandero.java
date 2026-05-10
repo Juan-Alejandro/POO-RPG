@@ -42,6 +42,11 @@ public class Curandero extends Personaje implements Curable{
         aliado.setVidaActual(aliado.getVidaActual()+puntosCuracion);
     }
 
+    @Override
+    public void poderMagico(Personaje objetivo) {
+        
+    }
+
     @Override 
     public String toString(){
         return super.toString() +
