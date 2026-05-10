@@ -12,7 +12,6 @@ public class SistemaAtaqueOrco {
     private Orco orco;
     private Personaje objetivo;
     private Batalla batalla;
-    
 
     public SistemaAtaqueOrco(List<Personaje> personajeLista, Batalla batalla, Orco orco) {
         this.personajeLista = personajeLista;
@@ -21,21 +20,24 @@ public class SistemaAtaqueOrco {
     }
 
     void inciarAtaque() {
+        System.out.print("\n\n" +
+                "=================================================\n" +
+                "⚠️  ¡EL ORCO PREPARA SU ATAQUE!  ⚠️\n" +
+                "=================================================\n");
         objetivo = getObjetivo();
 
         System.out.println("El orco usara alguna habilidad/poder? ");
-        if(usarPoder()){
+        if (usarPoder()) {
             usoPoderes(objetivo);
             return;
         }
-        
+
         System.out.println("El orco ha decidido no usar habilidades " + "\nEl orco realizara un ataque normal ");
-        objetivo.recibirDanio(personajeLista.get(4).getPoderAtaque());
-        batalla.juegoPrincipal();
+        objetivo.recibirDanio(orco.getPoderAtaque());
     }
 
     void usoPoderes(Personaje objetivo) {
-        if(usarPoder()) {
+        if (usarPoder()) {
             orco.poderMagico(orco);
             return;
         }
@@ -43,7 +45,7 @@ public class SistemaAtaqueOrco {
     }
 
     boolean usarPoder() {
-        if(((int)(Math.random() * (2 - 1)) + 1) == 2){
+        if (((int) (Math.random() * (2 - 1)) + 1) == 2) {
             return true;
         }
         return false;
