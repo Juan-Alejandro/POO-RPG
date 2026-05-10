@@ -249,13 +249,21 @@ public class Batalla {
 
     // Es el detector de ataques del usuario, segun el personaje que escoja
     void manejadorAtaquesUsuario(Personaje atacante, TipoAtaque tipoAtaque) {
+        int j = 1;
         System.out.print("\n--- [ SELECCIÓN DE OBJETIVO ] -------------------\n" +
-                "Aliados:\n" +
-                "  [1] Arquero   [2] Guerrero   [3] Mago   [4] Curandero\n" +
-                "Enemigos:\n" +
-                "  [5]   ORCO (Jefe)\n" +
-                "-------------------------------------------------\n" +
-                "Selecciona a quién dirigir la acción: ");
+                "Aliados:\n\n");
+                for(Personaje p : personajesLista) {
+
+                    System.out.print("    " + "["+ j + "]" + p.getPersonaje() + "    ");
+
+                    j++;
+                }
+
+                System.out.println("\n\nEnemigo:\n" +
+                    "    " + "\n[" + j + "] ORCO (Jefe)\n" +
+                "-----------------------------------------------------------");
+                
+                
         objetivo = getObjetivo();
         System.out.println("Objetivo seleccionado: " + objetivo.getNombrePersonaje());
         switch (tipoAtaque) {
@@ -306,7 +314,7 @@ public class Batalla {
             opcionUsuario = skan.nextInt();
             if(opcionUsuario >= 0 && opcionUsuario <= personajesLista.size()) {
                 objetivo = personajesLista.get(opcionUsuario-1);
-            } else if(opcionUsuario == 5) {
+            } else if(opcionUsuario == personajesLista.size()+1) {
                 objetivo = orco;
             } else {
                 System.out.println("Error: Objetivo no existente");
