@@ -41,6 +41,10 @@ public class Mago extends Personaje implements HabilidadEspecial{
     public void usarHabilidadEspecial(Personaje objetivo) {
     }
 
+    @Override
+    public void poderMagico(Personaje objetivo) {
+        
+    }
 
     @Override 
     public String toString(){

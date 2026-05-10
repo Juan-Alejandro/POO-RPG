@@ -111,7 +111,7 @@ public abstract class Personaje {
     }
 
     public abstract void atacar(Personaje enemigo);
-
+    public abstract void poderMagico(Personaje objetivo);
 
 
     // Curar vida

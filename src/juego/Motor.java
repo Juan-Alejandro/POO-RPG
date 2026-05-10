@@ -22,8 +22,6 @@ public class Motor {
             null,
             null,
             500,
-            0,
-            0,
             0);
 
     static Guerrero guerrero = new Guerrero("Guerrero",
@@ -69,8 +67,7 @@ public class Motor {
 
     static List<Personaje> person = new ArrayList<>();
 
-    static Batalla batalla = new Batalla(person);
-    static SistemaAtaqueOrco sistemaAtaqueOrco = new SistemaAtaqueOrco(person);
+    static Batalla batalla = new Batalla(person, orco);
 
 
     public static void main(String[] args) {

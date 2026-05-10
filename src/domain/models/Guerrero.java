@@ -37,6 +37,11 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
 
     }
 
+    @Override
+    public void poderMagico(Personaje objetivo) {
+        
+    }
+
     @Override 
     public String toString(){
         return super.toString() +

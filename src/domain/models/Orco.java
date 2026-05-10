@@ -40,6 +40,17 @@ public class Orco extends Personaje implements HabilidadEspecial {
         
     }
 
+    @Override
+    public void poderMagico(Personaje objetivo) {
+
+        System.out.println("Glotoneria!! : He curado mi vida a tope");
+
+        setVidaActual(getVidaMaxima());
+
+        System.out.println("Mi vida ahora es de: " + getVidaActual());
+
+    }
+
     @Override 
     public String toString(){
         return super.toString() +

@@ -4,25 +4,28 @@ import java.util.List;
 import java.util.Scanner;
 
 import domain.enums.EstadoPersonaje;
+import domain.enums.TiposPersonajes;
+import domain.models.Orco;
 import domain.models.Personaje;
 
 public class Batalla {
     // Manejadores para las rondas y partidas
-    boolean finalPartida = true;
-    int ronda = 1;
+    boolean finalPartida = false;
+    int ronda = 0;
 
     byte opcionUsuario;
     boolean contrladorBucles = true;
 
-    Personaje objetivo;
-
+    private Orco orco;
+    private Personaje objetivo;
     // Lista de los personajes y enemigo
     private List<Personaje> personajesLista;
 
-
     // Constructor de la clase para obtener lista de personajes
-    public Batalla(List<Personaje> personajesLista) {
+    public Batalla(List<Personaje> personajesLista, Orco orco) {
         this.personajesLista = personajesLista;
+        this.sistemaAtaqueOrco = new SistemaAtaqueOrco(personajesLista, this, orco);
+        this.orco = orco;
     }
 
     Scanner skan = new Scanner(System.in);
@@ -32,7 +35,7 @@ public class Batalla {
 
     // Manejador de acciones para el juego principal
     void juegoPrincipal() {
-
+        controladorRonda();
         do {
             if (comprobarDerrota()) {
                 partidaTerminada(false);
@@ -40,24 +43,34 @@ public class Batalla {
             }
 
             if (comprobarVictoria()) {
+
                 partidaTerminada(true);
                 finalPartida = false;
             }
             System.out.println("Numero de ronda: " + ronda);
 
-            if ((ronda % 2) == 0)
-                turnoMaquina();
             turnoUsuario();
+            if (orco.getEstadoPersonaje() != EstadoPersonaje.MUERTO)
+                turnoMaquina();
 
         } while (finalPartida);
+    }
+
+    void indicadorTurnos() {
+        
     }
 
     // Metodo para pantalla al final de la partida
     void partidaTerminada(Boolean resultados) {
         reiniciadorVida();
         System.out.println(resultados);
+        preguntarReiniciar();
     }
-    
+
+    void preguntarReiniciar() {
+
+    }
+
     // Al terminar la ronda, reinicia la vida de todos los personajes
     void reiniciadorVida() {
 
@@ -69,7 +82,7 @@ public class Batalla {
     // Aumenta las rondas y si termina la partida reinicia el contador de rondas
     int controladorRonda() {
         if (finalPartida) {
-            return ronda = 1;
+            return ronda = 0;
         }
         return ronda++;
     }
@@ -78,9 +91,8 @@ public class Batalla {
     void turnoMaquina() {
         System.out.println("El orco ataca");
 
+        sistemaAtaqueOrco.inciarAtaque();
 
-        controladorRonda();
-        
     }
 
     // Comprueba si perdio
@@ -101,45 +113,41 @@ public class Batalla {
         return finalPartida = false;
     }
 
-    // selector para manejar el 
+    // selector para manejar el
     void turnoUsuario() {
-        do {
-            try {
-
-                opcionUsuario = skan.nextByte();
-                switch (opcionUsuario) {
-                    case 1:
-                        manejadorAtaquesUsuario(personajesLista.get(0));
-                        contrladorBucles = false;
-                        break;
-                    case 2:
-                        manejadorAtaquesUsuario(personajesLista.get(1));
-                        contrladorBucles = false;
-                        break;
-                    case 3:
-                        manejadorAtaquesUsuario(personajesLista.get(2));
-                        contrladorBucles = false;
-                        break;
-                    case 4:
-                        manejadorAtaquesUsuario(personajesLista.get(3));
-                        contrladorBucles = false;
-                        break;
-                    default:
-                        System.out.println("Error: Esa opcion no existe");
-                        break;
-                }
-            } catch (Exception e) {
-                System.out.println("Error: Ingresa un caracter valido");
-                skan.nextLine();
+        System.out.println("Usuario ataca");
+        try {
+            opcionUsuario = skan.nextByte();
+            switch (opcionUsuario) {
+                case 1:
+                    manejadorAtaquesUsuario(personajesLista.get(0));
+                    break;
+                case 2:
+                    manejadorAtaquesUsuario(personajesLista.get(1));
+                    break;
+                case 3:
+                    manejadorAtaquesUsuario(personajesLista.get(2));
+                    break;
+                case 4:
+                    manejadorAtaquesUsuario(personajesLista.get(3));
+                    break;
+                default:
+                    System.out.println("Error: Esa opcion no existe");
+                    break;
             }
-        } while (contrladorBucles);
-        controladorRonda();
+        } catch (Exception e) {
+            System.out.println("Error: Ingresa un caracter valido");
+            skan.nextLine();
+            turnoUsuario();
+        }
+
+        // Hace que se regrese pero evita el ataque del orco
         juegoPrincipal();
     }
 
     // Es el detector de ataques del usuario, segun el personaje que escoja
     void manejadorAtaquesUsuario(Personaje atacante) {
-        System.out.println("Usuario ataca");
+        System.out.println("Elige objetivo");
         objetivo = getObjetivo();
         System.out.println("Objetivo seleccionado: " + objetivo.getNombrePersonaje());
         objetivo.recibirDanio(atacante.getPoderAtaque());
