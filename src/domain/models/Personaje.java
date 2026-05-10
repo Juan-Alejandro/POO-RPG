@@ -3,6 +3,8 @@ package domain.models;
 import domain.enums.BandoPersonaje;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
+import domain.enums.HabilidadClase;
+import domain.enums.PoderPersonajes;
 import domain.enums.TiposPersonajes;
 
 public abstract class Personaje {
@@ -12,6 +14,8 @@ public abstract class Personaje {
     private EstadoPersonaje estadoPersonaje;
     private BandoPersonaje bandoPersonaje;
     private TiposPersonajes tiposPersonajes;
+    private final PoderPersonajes nombrePoder;
+    private HabilidadClase habilidadClase;
     private int vidaActual;
     private int poderAtaque;
     private final int defensa;
@@ -26,6 +30,8 @@ public abstract class Personaje {
         EstadoPersonaje estadoPersonaje,
         BandoPersonaje bandoPersonaje,
         TiposPersonajes tiposPersonajes,
+        PoderPersonajes nombrePoder,
+        HabilidadClase habilidadClase,
         int poderAtaque,
         int defensa){
 
@@ -36,6 +42,8 @@ public abstract class Personaje {
             this.personaje = personaje;
             this.estadoPersonaje = estadoPersonaje;
             this.tiposPersonajes = tiposPersonajes;
+            this.nombrePoder = nombrePoder;
+            this.habilidadClase = habilidadClase;
             this.poderAtaque = poderAtaque;
             this.defensa = defensa;
     }
@@ -78,6 +86,14 @@ public abstract class Personaje {
 
     public TiposPersonajes getTiposPersonajes() {
         return tiposPersonajes;
+    }
+
+    public HabilidadClase getNombreHabilidad() {
+        return habilidadClase;
+    }
+
+    public PoderPersonajes getNombrePoder() {
+        return nombrePoder;
     }
 
     //Setters
@@ -132,6 +148,8 @@ public abstract class Personaje {
         "\nClase: " + personaje +
         "\nBando del personaje: " + bandoPersonaje +
         "\nTipo del personaje: " + tiposPersonajes +
+        "\nPoder del personaje: "+ nombrePoder +
+        "\nHabilidad clase: " + habilidadClase +
         "\nEstado: " + estadoPersonaje +
         "\nPoder de ataque: " + poderAtaque +
         "\nDefensa: " + defensa;

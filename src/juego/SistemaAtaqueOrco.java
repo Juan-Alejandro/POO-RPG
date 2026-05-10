@@ -1,6 +1,7 @@
 package juego;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import domain.models.Orco;
 import domain.models.Personaje;
@@ -26,9 +27,20 @@ public class SistemaAtaqueOrco {
                 "=================================================\n");
         objetivo = getObjetivo();
 
-        System.out.println("El orco usara alguna habilidad/poder? ");
-        if (usarPoder()) {
-            usoPoderes(objetivo);
+        System.out.println("El orco usara su poder? ");
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            orco.poderMagico(orco);
+            return;
+        }
+        
+        System.out.println("El orco ha decidido no usar poder magico\n ");
+
+        System.out.println("El orco usara su habilidad?");
+        if (ThreadLocalRandom.current().nextBoolean()) {
+            System.out.println("Orco: Os asesinare a todos");
+            for(Personaje p : personajeLista) {
+                orco.usarHabilidadEspecial(p);
+            }
             return;
         }
 
@@ -36,54 +48,13 @@ public class SistemaAtaqueOrco {
         objetivo.recibirDanio(orco.getPoderAtaque());
     }
 
-    void usoPoderes(Personaje objetivo) {
-        if (usarPoder()) {
-            orco.poderMagico(orco);
-            return;
-        }
-        orco.usarHabilidadEspecial(objetivo);
-    }
-
-    boolean usarPoder() {
-        if (((int) (Math.random() * (2 - 1)) + 1) == 2) {
-            return true;
-        }
-        return false;
-    }
-
     Personaje getObjetivo() {
-        switch ((int) ((Math.random() * (4 - 1)) + 1)) {
-            case 1:
-                objetivo = personajeLista.get(0);
-                break;
-            case 2:
-                objetivo = personajeLista.get(1);
-                break;
-            case 3:
-                objetivo = personajeLista.get(2);
-                break;
-            case 4:
-                objetivo = personajeLista.get(3);
-                break;
-            default:
-                break;
+        int objOrco = (int) ((Math.random() * (4 - 1)) + 1);
+        try {
+            objetivo = personajeLista.get(objOrco);
+        } catch (Exception e) {
+            System.out.println("Error del sistema aleatorio");
         }
         return objetivo;
-    }
-
-    void ataqueGuerrero() {
-
-    }
-
-    void ataqueArquero() {
-
-    }
-
-    void ataqueMago() {
-
-    }
-
-    void ataqueCurandero() {
-
     }
 }

@@ -5,5 +5,6 @@ public enum TiposPersonajes {
     ESPADA,
     COPA,
     BASTO,
-    ORCO
+    ORCO,
+    CURANDERO
 }

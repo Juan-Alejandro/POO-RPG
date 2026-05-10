@@ -3,6 +3,8 @@ package domain.models;
 import domain.enums.BandoPersonaje;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
+import domain.enums.HabilidadClase;
+import domain.enums.PoderPersonajes;
 import domain.enums.TiposPersonajes;
 import domain.util.interfaces.HabilidadEspecial;
 
@@ -17,9 +19,21 @@ public class Mago extends Personaje implements HabilidadEspecial{
         EstadoPersonaje estadoPersonaje,
         BandoPersonaje bandoPersonaje,
         TiposPersonajes tiposPersonajes,
+        PoderPersonajes nombrePoder,
+        HabilidadClase habilidadClase,
         int poderAtaque, 
         int defensa) {
-            super(nombrePersonaje, vidaMaxima, vidaActual, personaje, estadoPersonaje, bandoPersonaje, tiposPersonajes, poderAtaque, defensa);
+            super(nombrePersonaje, 
+                vidaMaxima, 
+                vidaActual, 
+                personaje, 
+                estadoPersonaje, 
+                bandoPersonaje, 
+                tiposPersonajes, 
+                nombrePoder,
+                habilidadClase,
+                poderAtaque, 
+                defensa);
 
     }
 

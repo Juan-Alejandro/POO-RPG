@@ -1,8 +1,12 @@
 package domain.models;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import domain.enums.BandoPersonaje;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
+import domain.enums.HabilidadClase;
+import domain.enums.PoderPersonajes;
 import domain.enums.TiposPersonajes;
 import domain.util.interfaces.HabilidadEspecial;
 
@@ -17,9 +21,21 @@ public class Orco extends Personaje implements HabilidadEspecial {
         EstadoPersonaje estadoPersonaje,
         BandoPersonaje bandoPersonaje,
         TiposPersonajes tiposPersonajes,
+        PoderPersonajes nombrePoder,
+        HabilidadClase habilidadClase,
         int poderAtaque, 
         int defensa){
-        super(nombrePersonaje, vidaMaxima, vidaActual, personaje,estadoPersonaje, bandoPersonaje, tiposPersonajes, poderAtaque, defensa);
+        super(nombrePersonaje, 
+            vidaMaxima, 
+            vidaActual, 
+            personaje,
+            estadoPersonaje, 
+            bandoPersonaje, 
+            tiposPersonajes,
+            nombrePoder,
+            habilidadClase,
+            poderAtaque, 
+            defensa);
     }
 
 
@@ -38,17 +54,29 @@ public class Orco extends Personaje implements HabilidadEspecial {
     @Override
     public void usarHabilidadEspecial(Personaje enemigo) {
         
+        if (ThreadLocalRandom.current().nextInt(15) == 0 ||
+                ThreadLocalRandom.current().nextInt(15) == 4 ||
+                ThreadLocalRandom.current().nextInt(15) == 14) {
+            System.out.println("Kill 'Em All !!! - Orco: Hora de la masacre");
+            enemigo.recibirDanio(200);
+            return;
+        }
+
+        System.out.println("Orco: No funciono mi habilidad.....");
     }
 
     @Override
     public void poderMagico(Personaje objetivo) {
+    System.out.println("Orco: Tratare de curarme\n");
+        if (ThreadLocalRandom.current().nextInt(6) == 3) {
+            System.out.println("Glotoneria!! - Orco: He curado mi vida a tope");
 
-        System.out.println("Glotoneria!! : He curado mi vida a tope");
+            setVidaActual(getVidaMaxima());
 
-        setVidaActual(getVidaMaxima());
-
-        System.out.println("Mi vida ahora es de: " + getVidaActual());
-
+            System.out.println("Orco: Mi vida ahora es de- " + getVidaActual());
+            return;
+        }
+        System.out.println("Orco: No pude usar mi poder Grrrrr");
     }
 
     @Override 

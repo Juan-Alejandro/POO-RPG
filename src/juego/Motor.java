@@ -7,6 +7,8 @@ import java.util.Scanner;
 import domain.enums.BandoPersonaje;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
+import domain.enums.HabilidadClase;
+import domain.enums.PoderPersonajes;
 import domain.enums.TiposPersonajes;
 import domain.models.Arquero;
 import domain.models.Curandero;
@@ -25,6 +27,8 @@ public class Motor {
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
             TiposPersonajes.BASTO,
+            PoderPersonajes.RAFAGA,
+            HabilidadClase.TRIFUERZA,
             500,
             100);
 
@@ -35,6 +39,8 @@ public class Motor {
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
             TiposPersonajes.BASTO,
+            PoderPersonajes.DESESPERACION,
+            HabilidadClase.FRENESI,
             500,
             100);
 
@@ -45,6 +51,8 @@ public class Motor {
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
             TiposPersonajes.BASTO,
+            PoderPersonajes.REGALO,
+            HabilidadClase.AUTOCURACION,
             500,
             100);
 
@@ -54,8 +62,10 @@ public class Motor {
             ClasesPersonajes.CURANDERO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
-            TiposPersonajes.BASTO,
-            100,
+            TiposPersonajes.CURANDERO,
+            PoderPersonajes.SACRIFICIO,
+            HabilidadClase.CURACION,
+            500,
             100,
             200);
 
@@ -66,6 +76,8 @@ public class Motor {
             EstadoPersonaje.VIVO,
             BandoPersonaje.ENEMIGO,
             TiposPersonajes.BASTO,
+            PoderPersonajes.KILL_EM_ALL,
+            HabilidadClase.SEEK_AND_DESTROY,
             500,
             400);
 
