@@ -85,6 +85,8 @@ public class Motor {
 
     static Batalla batalla = new Batalla(person, orco);
 
+    static MirarEstadisticas mirarEstadisticas = new MirarEstadisticas(person);
+
     Scanner skan = new Scanner(System.in);
     byte opcionUsuario;
 
@@ -122,10 +124,10 @@ public class Motor {
                     System.out.println("Gracias por jugar :D xd");
                     break;
                 case 1:
-                    arrancarJuego();
+                    batalla.juegoPrincipal();
                     break;
                 case 2:
-                    mirarEstadisticas();
+                    mirarEstadisticas.stats();
                     break;
                 case 3:
                     cambiarClase();
@@ -143,14 +145,6 @@ public class Motor {
             skan.nextLine();
             menuPrincipal();
         }
-
-    }
-
-    void arrancarJuego() {
-        batalla.juegoPrincipal();
-    }
-
-    void mirarEstadisticas() {
 
     }
 
