@@ -86,7 +86,9 @@ public abstract class Personaje {
         this.vidaActual = vidaCurada;
     }
 
-
+    public void setEstadoPersonaje(EstadoPersonaje estadoPersonaje) {
+        this.estadoPersonaje = estadoPersonaje;
+    }
 
 
     public void recibirDanio(int cantidad){
