@@ -24,17 +24,17 @@ public class Curandero extends Personaje implements Curable {
             int poderAtaque,
             int defensa,
             int puntosCuracion) {
-        super(nombrePersonaje, 
-            vidaMaxima, 
-            vidaActual, 
-            personaje, 
-            estadoPersonaje, 
-            bandoPersonaje, 
-            tiposPersonajes,
-            nombrePoder,
-            habilidadClase,
-            poderAtaque,
-            defensa);
+        super(nombrePersonaje,
+                vidaMaxima,
+                vidaActual,
+                personaje,
+                estadoPersonaje,
+                bandoPersonaje,
+                tiposPersonajes,
+                nombrePoder,
+                habilidadClase,
+                poderAtaque,
+                defensa);
 
         this.puntosCuracion = puntosCuracion;
     }
@@ -52,7 +52,19 @@ public class Curandero extends Personaje implements Curable {
 
     @Override
     public void curar(Personaje aliado) {
-        aliado.setVidaActual(aliado.getVidaActual() + puntosCuracion);
+        if(aliado.getEstadoPersonaje() == EstadoPersonaje.MUERTO) {
+            System.out.println("EL personaje esta muerto, no fue posible revivirlo");
+            return;
+        }
+        System.out.println("Curacion ");
+        if ((aliado.getVidaActual() + puntosCuracion) > aliado.getVidaMaxima()) {
+            aliado.setVidaActual(aliado.getVidaMaxima());
+        } else {
+            aliado.curarVida(puntosCuracion);
+        }
+        System.out.println("El personaje " + aliado.getNombrePersonaje() + " ha sido curado y su vida ahora es: "
+                + aliado.getVidaActual());
+
     }
 
     @Override
@@ -65,8 +77,8 @@ public class Curandero extends Personaje implements Curable {
         setVidaActual(0);
 
         System.out.println("\nEstadisticas del curandero: " +
-                    "\nVida: " + getVidaActual() + 
-                    "\nEstado: " + getEstadoPersonaje());
+                "\nVida: " + getVidaActual() +
+                "\nEstado: " + getEstadoPersonaje());
     }
 
     @Override

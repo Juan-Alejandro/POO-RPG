@@ -39,7 +39,7 @@ public class SistemaAtaqueOrco {
         if (ThreadLocalRandom.current().nextBoolean()) {
             System.out.println("Orco: Os asesinare a todos");
             for(Personaje p : personajeLista) {
-                orco.usarHabilidadEspecial(p);
+                orco.usarHabilidadEspecial(p , orco.getTiposPersonajes());
             }
             return;
         }

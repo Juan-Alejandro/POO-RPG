@@ -6,7 +6,10 @@ import java.util.Scanner;
 import domain.enums.ClasesPersonajes;
 import domain.enums.EstadoPersonaje;
 import domain.enums.TipoAtaque;
-import domain.enums.TiposPersonajes;
+import domain.models.Arquero;
+import domain.models.Curandero;
+import domain.models.Guerrero;
+import domain.models.Mago;
 import domain.models.Orco;
 import domain.models.Personaje;
 
@@ -21,7 +24,10 @@ public class Batalla {
     private Motor motor = new Motor();
     private Orco orco;
     private Personaje objetivo;
-
+    private Arquero arquero;
+    private Mago mago;
+    private Guerrero guerrero;
+    private Curandero curandero;
     // Lista de los personajes y enemigo
     private List<Personaje> personajesLista;
 
@@ -30,6 +36,20 @@ public class Batalla {
         this.personajesLista = personajesLista;
         this.sistemaAtaqueOrco = new SistemaAtaqueOrco(personajesLista, this, orco);
         this.orco = orco;
+
+        // Se instancian las clases de los objetos para poder utilizarse a lo largo del
+        // codigo sin problemas
+        for (Personaje p : personajesLista) {
+            if (p instanceof Arquero) {
+                this.arquero = (Arquero) p;
+            } else if (p instanceof Guerrero) {
+                this.guerrero = (Guerrero) p;
+            } else if (p instanceof Mago) {
+                this.mago = (Mago) p;
+            } else if (p instanceof Curandero) {
+                this.curandero = (Curandero) p;
+            }
+        }
     }
 
     Scanner skan = new Scanner(System.in);
@@ -37,10 +57,28 @@ public class Batalla {
     // Clase de orco
     SistemaAtaqueOrco sistemaAtaqueOrco;
 
+    private boolean despertadorAturdimiento = true;
+
     // Manejador de acciones para el juego principal
+    void despertadorPersonajes() {
+        if (orco.getVidaActual() > 0) {
+            orco.setEstadoPersonaje(EstadoPersonaje.VIVO);
+        }
+        for (Personaje p : personajesLista) {
+            if (p.getVidaActual() > 0)
+                p.setEstadoPersonaje(EstadoPersonaje.VIVO);
+        }
+    }
+
     void juegoPrincipal() {
 
         while (!finalPartida) {
+            
+            // Quita el aturdimiento a los personajes en las rondas que sean multiplos de 3
+            if(ronda % 3 == 0) {
+                despertadorPersonajes();
+            }
+
             controladorRonda();
             if (comprobarDerrota()) {
                 partidaTerminada(false);
@@ -139,7 +177,12 @@ public class Batalla {
 
     // Decide de manera aleatoria lo que realizara el enemigo
     void turnoMaquina() {
-        sistemaAtaqueOrco.inciarAtaque();
+        if (orco.getEstadoPersonaje() == EstadoPersonaje.ATURDIDO) {
+            System.out.println("El orco esta aturdido");
+
+        } else {
+            sistemaAtaqueOrco.inciarAtaque();
+        }
     }
 
     // Comprueba si perdio
@@ -233,13 +276,12 @@ public class Batalla {
                     selectorHabilidadesOPoderes(p);
                     break;
             }
-
         } catch (Exception e) {
-            System.out.println("Caracter no valido, inserte uno valido");
+            System.out.println(e);
+            System.out.println("Caracter no valido, inserte uno valido zzzzzz");
             skan.nextLine();
             selectorHabilidadesOPoderes(p);
         }
-        // manejadorAtaquesUsuario(p);
     }
 
     // Es el detector de ataques del usuario, segun el personaje que escoja
@@ -281,20 +323,18 @@ public class Batalla {
     }
 
     void usuarioHabilidad(Personaje atacante, Personaje objetivo) {
-        TiposPersonajes klase;
-        klase = atacante.getTiposPersonajes();
         switch (atacante.getPersonaje()) {
             case ClasesPersonajes.ARQUERO:
-
+                arquero.usarHabilidadEspecial(objetivo, atacante.getTiposPersonajes());
                 break;
             case ClasesPersonajes.GUERRERO:
-
+                guerrero.usarHabilidadEspecial(objetivo, atacante.getTiposPersonajes());
                 break;
             case ClasesPersonajes.MAGO:
-
+                mago.usarHabilidadEspecial(objetivo, atacante.getTiposPersonajes());
                 break;
             case ClasesPersonajes.CURANDERO:
-
+                curandero.curar(objetivo);
                 break;
 
             default:

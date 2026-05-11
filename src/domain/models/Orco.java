@@ -52,7 +52,7 @@ public class Orco extends Personaje implements HabilidadEspecial {
 
 
     @Override
-    public void usarHabilidadEspecial(Personaje enemigo) {
+    public void usarHabilidadEspecial(Personaje enemigo, TiposPersonajes tiposPersonajes) {
         
         if (ThreadLocalRandom.current().nextInt(15) == 0 ||
                 ThreadLocalRandom.current().nextInt(15) == 4 ||
