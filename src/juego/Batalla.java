@@ -160,7 +160,7 @@ public class Batalla {
         return false;
     }
 
-    // selector para manejar el
+    // selector para manejar elturno del usuario
     void turnoUsuario() {
 
         i = 0;
@@ -181,6 +181,9 @@ public class Batalla {
                 if (p.getEstadoPersonaje() == EstadoPersonaje.VIVO) {
                     selectorHabilidadesOPoderes(p);
                     return;
+                } else if (p.getEstadoPersonaje() == EstadoPersonaje.ATURDIDO) {
+                    System.out.println(" El personaje esta aturdido seleccione otro");
+                    turnoUsuario();
                 } else {
                     System.out.println("El personaje esta muerto escoja otro");
                     turnoUsuario();
@@ -193,14 +196,6 @@ public class Batalla {
             turnoUsuario();
         }
 
-    }
-
-    void verificarAturdimiento(Personaje p) {
-        if (p.getEstadoPersonaje() == EstadoPersonaje.ATURDIDO) {
-            System.out.println(" El personaje esta aturdido seleccione otro");
-            turnoUsuario();
-        }
-        selectorHabilidadesOPoderes(p);
     }
 
     void selectorHabilidadesOPoderes(Personaje p) {
@@ -252,18 +247,17 @@ public class Batalla {
         int j = 1;
         System.out.print("\n--- [ SELECCIÓN DE OBJETIVO ] -------------------\n" +
                 "Aliados:\n\n");
-                for(Personaje p : personajesLista) {
+        for (Personaje p : personajesLista) {
 
-                    System.out.print("    " + "["+ j + "]" + p.getPersonaje() + "    ");
+            System.out.print("    " + "[" + j + "]" + p.getPersonaje() + "    ");
 
-                    j++;
-                }
+            j++;
+        }
 
-                System.out.println("\n\nEnemigo:\n" +
-                    "    " + "\n[" + j + "] ORCO (Jefe)\n" +
+        System.out.println("\n\nEnemigo:\n" +
+                "    " + "\n[" + j + "] ORCO (Jefe)\n" +
                 "-----------------------------------------------------------");
-                
-                
+
         objetivo = getObjetivo();
         System.out.println("Objetivo seleccionado: " + objetivo.getNombrePersonaje());
         switch (tipoAtaque) {
@@ -291,7 +285,7 @@ public class Batalla {
         klase = atacante.getTiposPersonajes();
         switch (atacante.getPersonaje()) {
             case ClasesPersonajes.ARQUERO:
-                
+
                 break;
             case ClasesPersonajes.GUERRERO:
 
@@ -312,9 +306,9 @@ public class Batalla {
     Personaje getObjetivo() {
         try {
             opcionUsuario = skan.nextInt();
-            if(opcionUsuario >= 0 && opcionUsuario <= personajesLista.size()) {
-                objetivo = personajesLista.get(opcionUsuario-1);
-            } else if(opcionUsuario == personajesLista.size()+1) {
+            if (opcionUsuario >= 0 && opcionUsuario <= personajesLista.size()) {
+                objetivo = personajesLista.get(opcionUsuario - 1);
+            } else if (opcionUsuario == personajesLista.size() + 1) {
                 objetivo = orco;
             } else {
                 System.out.println("Error: Objetivo no existente");
