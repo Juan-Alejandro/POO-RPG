@@ -106,6 +106,10 @@ public abstract class Personaje {
         this.estadoPersonaje = estadoPersonaje;
     }
 
+    public void setTiposPersonajes(TiposPersonajes tiposPersonajes) {
+        this.tiposPersonajes = tiposPersonajes;
+    }
+
 
     public void recibirDanio(int cantidad){
         int danioRecibido = cantidad - this.defensa;

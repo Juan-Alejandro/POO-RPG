@@ -87,6 +87,8 @@ public class Motor {
 
     static MirarEstadisticas mirarEstadisticas = new MirarEstadisticas(person);
 
+    static CambioTipo cambioClase = new CambioTipo(person);
+
     Scanner skan = new Scanner(System.in);
     byte opcionUsuario;
 
@@ -100,7 +102,10 @@ public class Motor {
     }
 
     void menuPrincipal() {
-        anadirPersonajes();
+        if(person.isEmpty()) {
+            anadirPersonajes();
+        }
+
         try {
             System.out.print("\n\n" +
                     "=================================================\n" +
@@ -130,10 +135,7 @@ public class Motor {
                     mirarEstadisticas.stats();
                     break;
                 case 3:
-                    cambiarClase();
-                    break;
-                case 4:
-
+                    cambioClase.cambiarClase();
                     break;
                 default:
                     System.out.println("Opcion no disponible ");
@@ -148,9 +150,7 @@ public class Motor {
 
     }
 
-    void cambiarClase() {
 
-    }
 
     static List<Personaje> anadirPersonajes() {
         // Aqui se aniaden los personajes a una lista
