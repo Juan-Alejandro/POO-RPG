@@ -75,7 +75,7 @@ public class Motor {
             ClasesPersonajes.ORCO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ENEMIGO,
-            TiposPersonajes.BASTO,
+            TiposPersonajes.ORCO,
             PoderPersonajes.KILL_EM_ALL,
             HabilidadClase.SEEK_AND_DESTROY,
             500,
@@ -83,26 +83,31 @@ public class Motor {
 
     static List<Personaje> person = new ArrayList<>();
 
-    static Batalla batalla = new Batalla(person, orco);
+    static Batalla batalla;
 
-    static MirarEstadisticas mirarEstadisticas = new MirarEstadisticas(person);
+    static MirarEstadisticas mirarEstadisticas;
 
-    static CambioTipo cambioClase = new CambioTipo(person);
+    static CambioTipo cambioClase;
 
     Scanner skan = new Scanner(System.in);
     byte opcionUsuario;
 
     public static void main(String[] args) {
         Motor motor = new Motor();
+        anadirPersonajes();
+
+        batalla = new Batalla(person, orco);
+
+        mirarEstadisticas = new MirarEstadisticas(person);
+
+        cambioClase = new CambioTipo(person);
 
         motor.menuPrincipal();
-
-        
 
     }
 
     void menuPrincipal() {
-        if(person.isEmpty()) {
+        if (person.isEmpty()) {
             anadirPersonajes();
         }
 
@@ -125,7 +130,7 @@ public class Motor {
                     "Elige una opción: ");
             opcionUsuario = skan.nextByte();
             switch (opcionUsuario) {
-                case 0: 
+                case 0:
                     System.out.println("Gracias por jugar :D xd");
                     break;
                 case 1:
@@ -149,8 +154,6 @@ public class Motor {
         }
 
     }
-
-
 
     static List<Personaje> anadirPersonajes() {
         // Aqui se aniaden los personajes a una lista

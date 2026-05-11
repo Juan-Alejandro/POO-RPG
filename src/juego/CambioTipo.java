@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import domain.enums.HabilidadClase;
 import domain.enums.TiposPersonajes;
 import domain.models.Personaje;
+import domain.util.interfaces.HabilidadEspecial;
 
 public class CambioTipo {
 
@@ -16,13 +18,11 @@ public class CambioTipo {
             TiposPersonajes.COPA,
             TiposPersonajes.ESPADA,
             TiposPersonajes.ORO);
+
     private byte k, opcionUsuario, i;
     private Motor motor = new Motor();
     private Scanner skan = new Scanner(System.in);
     private Personaje objetivoCambio;
-
-    private MetodosMultiples metodosVerificacion = new MetodosMultiples();
-
 
     public CambioTipo(List<Personaje> listaPersonajes) {
         this.listaPersonajes = listaPersonajes;
@@ -40,8 +40,9 @@ public class CambioTipo {
 
                 System.out.println("[" + k + "] Nombre:" +
                         p.getNombrePersonaje() +
-                        " Clase: " + p.getPersonaje()
-                        + " Tipo: " + p.getTiposPersonajes());
+                        "| Clase: " + p.getPersonaje() +
+                        "| Tipo: " + p.getTiposPersonajes() +
+                        "| Habilidad: " + p.getNombreHabilidad());
                 k++;
             }
 
@@ -65,7 +66,7 @@ public class CambioTipo {
     List<Personaje> creadorListaProvisional() {
         k = 0;
         for (Personaje p : listaPersonajes) {
-            if (metodosVerificacion.esAptoCambio(p)) {
+            if (esAptoCambio(p)) {
                 listaProvisionalPersonajes.add(listaPersonajes.get(k));
 
             }
@@ -75,6 +76,12 @@ public class CambioTipo {
         return listaProvisionalPersonajes;
     }
 
+    boolean esAptoCambio(Personaje objevitoCambio) {
+        if (objevitoCambio instanceof HabilidadEspecial) {
+            return true;
+        }
+        return false;
+    }
 
     void ajusteTipo(Personaje objetivoCambio) {
         i = 0;
@@ -85,22 +92,81 @@ public class CambioTipo {
                 i++;
             }
             opcionUsuario = skan.nextByte();
-            opcionUsuario--;
+            opcionUsuario--; 
+
             realizarAjusteTipo(objetivoCambio, opcionUsuario);
 
-            System.out.println(
-                    "El personaje ahora pertenece a la clase: " + objetivoCambio.getTiposPersonajes() + "\n\n");
-                cambiarClase();
+            realizarAjusteHabilidadesClase(objetivoCambio, opcionUsuario);
+
+            System.out.println("Cambio exitoso:");
+            System.out.println("Nuevo Tipo: " + objetivoCambio.getTiposPersonajes());
+            System.out.println("Nueva Habilidad: " + objetivoCambio.getNombreHabilidad() + "\n");
+
+            cambiarClase();
 
         } catch (Exception e) {
-            System.out.println("Opcion no valida, ingrese otra");
-            ajusteTipo(objetivoCambio);
+            System.out.println("Opcion no valida, regresando...");
+            skan.nextLine(); // Limpiar buffer
+            cambiarClase();
         }
-
     }
 
     void realizarAjusteTipo(Personaje objetivoCambio, byte opcionUsuario) {
         objetivoCambio.setTiposPersonajes(tiposPersonajes.get(opcionUsuario));
+    }
+
+    void realizarAjusteHabilidadesClase(Personaje objetivoCambio, byte opcionUsuario) {
+        TiposPersonajes tipoSeleccionado = tiposPersonajes.get(opcionUsuario);
+
+        switch (objetivoCambio.getPersonaje()) {
+            case ARQUERO:
+                switch (tipoSeleccionado) {
+                    case ORO:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.OJO_DE_HALCON);
+                        break;
+                    case ESPADA:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.RAFAGA);
+                        break;
+                    case COPA:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.ATURDIDORA);
+                        break;
+                    case BASTO:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.TRIFUERZA);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            case GUERRERO:
+                switch (tipoSeleccionado) {
+                    case ORO:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.DOBLEFILO);
+                        break;
+                    case ESPADA:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.DESINTERESADO);
+                        break;
+                    case COPA:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.DESESTABILIZADOR);
+                        break;
+                    case BASTO:
+                        objetivoCambio.setHabilidadClase(HabilidadClase.FRENESI);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            case MAGO:
+                if (tipoSeleccionado == TiposPersonajes.ORO || tipoSeleccionado == TiposPersonajes.COPA) {
+                    objetivoCambio.setHabilidadClase(HabilidadClase.EXPLOSION);
+                } else {
+                    objetivoCambio.setHabilidadClase(HabilidadClase.AUTOCURACION);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 }

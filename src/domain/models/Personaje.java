@@ -110,6 +110,10 @@ public abstract class Personaje {
         this.tiposPersonajes = tiposPersonajes;
     }
 
+    public void setHabilidadClase(HabilidadClase habilidadClase) {
+        this.habilidadClase = habilidadClase;
+    }
+
 
     public void recibirDanio(int cantidad){
         int danioRecibido = cantidad - this.defensa;
