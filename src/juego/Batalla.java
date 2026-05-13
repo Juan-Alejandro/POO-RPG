@@ -73,9 +73,11 @@ public class Batalla {
     void juegoPrincipal() {
 
         while (!finalPartida) {
-            
+            guerrero.recuperarEstaminaGuerrero();
+            mago.recuperarManaMago();
+
             // Quita el aturdimiento a los personajes en las rondas que sean multiplos de 3
-            if(ronda % 3 == 0) {
+            if (ronda % 3 == 0) {
                 despertadorPersonajes();
             }
 
@@ -163,6 +165,9 @@ public class Batalla {
             p.setVidaActual(p.getVidaMaxima());
             p.setEstadoPersonaje(EstadoPersonaje.VIVO);
         }
+        arquero.setFlechasActuales(arquero.getFlechasMaximas());
+        guerrero.setEstaminaActual(guerrero.getEstaminaMax());
+        mago.setManaActual(mago.getManaMax());
         orco.setVidaActual(orco.getVidaMaxima());
         orco.setEstadoPersonaje(EstadoPersonaje.VIVO);
     }
@@ -241,6 +246,19 @@ public class Batalla {
 
     }
 
+    String obtenerDatosHeroe(Personaje p) {
+        switch (p.getPersonaje()) {
+            case ClasesPersonajes.ARQUERO:
+                return "Flechas: "+arquero.getFlechasActuales() + "/" + arquero.getFlechasMaximas();
+            case ClasesPersonajes.GUERRERO:
+                return "Estamina: "+guerrero.getEstaminaActual() + "/" + guerrero.getEstaminaMax();
+            case ClasesPersonajes.MAGO:
+                return "Maná: " + mago.getManaActual() + "/" + mago.getManaMax();
+            default:
+                return "";
+        }
+    }
+
     void selectorHabilidadesOPoderes(Personaje p) {
         try {
             System.out.println("\n" +
@@ -248,8 +266,9 @@ public class Batalla {
                     "║            M E N Ú   D E   A C C I Ó N          ║\n" +
                     "╠═════════════════════════════════════════════════╣\n" +
                     "  Héroe: " + p.getNombrePersonaje() + " (" + p.getTiposPersonajes() + ")\n" +
-                    "  Estado: " + p.getEstadoPersonaje() + " | Vida: " + p.getVidaActual() + "/" + p.getVidaMaxima()
-                    + "\n" +
+                    "  Estado: " + p.getEstadoPersonaje() + " | Vida: " + p.getVidaActual() + "/" + p.getVidaMaxima() +
+                    "  \n" + obtenerDatosHeroe(p) + "\n" +
+                    "  \n" +
                     "  \n" +
                     "  ¿Qué tipo de ataque deseas realizar?\n" +
                     "  [1] PODER       - Poder del personaje \n" +
@@ -261,6 +280,11 @@ public class Batalla {
             switch (opcionUsuario) {
                 case 1:
                     tipoAtaque = TipoAtaque.PODER;
+                    if (p.getPersonaje() == ClasesPersonajes.ARQUERO) {
+                        p.poderMagico(p);
+                        return;
+                    }
+
                     manejadorAtaquesUsuario(p, tipoAtaque);
                     break;
                 case 2:
@@ -310,7 +334,7 @@ public class Batalla {
                 usuarioHabilidad(atacante, objetivo);
                 break;
             case TipoAtaque.NORMAL:
-                objetivo.recibirDanio(atacante.getPoderAtaque());
+                atacante.atacar(objetivo);
                 break;
             default:
                 break;

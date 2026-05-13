@@ -19,10 +19,9 @@ import domain.models.Personaje;
 
 public class Motor {
 
-    // Objetos de los personajes
     static Arquero arquero = new Arquero("Arquero",
-            100,
-            100,
+            150,
+            150,
             ClasesPersonajes.ARQUERO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
@@ -30,56 +29,62 @@ public class Motor {
             PoderPersonajes.RAFAGA,
             HabilidadClase.TRIFUERZA,
             500,
-            100);
+            150,
+            20,
+            20);
 
     static Guerrero guerrero = new Guerrero("Guerrero",
-            100,
-            100,
+            180,
+            180,
             ClasesPersonajes.GUERRERO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
             TiposPersonajes.BASTO,
             PoderPersonajes.DESESPERACION,
             HabilidadClase.FRENESI,
-            500,
-            100);
+            550,
+            160,
+            100,
+            10);
 
     static Mago mago = new Mago("Mago",
-            100,
-            100,
+            140,
+            140,
             ClasesPersonajes.MAGO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
             TiposPersonajes.BASTO,
             PoderPersonajes.REGALO,
             HabilidadClase.AUTOCURACION,
-            500,
-            100);
+            550,
+            130,
+            200,
+            200);
 
     static Curandero curandero = new Curandero("Curandero",
-            100,
-            100,
+            150,
+            150,
             ClasesPersonajes.CURANDERO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ALIADO,
             TiposPersonajes.CURANDERO,
             PoderPersonajes.SACRIFICIO,
             HabilidadClase.CURACION,
-            500,
-            100,
-            200);
+            480,
+            140,
+            250);
 
     static Orco orco = new Orco("Orco",
-            100,
-            100,
+            1200,
+            1200,
             ClasesPersonajes.ORCO,
             EstadoPersonaje.VIVO,
             BandoPersonaje.ENEMIGO,
             TiposPersonajes.ORCO,
             PoderPersonajes.KILL_EM_ALL,
             HabilidadClase.SEEK_AND_DESTROY,
-            500,
-            400);
+            520,
+            380);
 
     static List<Personaje> person = new ArrayList<>();
 

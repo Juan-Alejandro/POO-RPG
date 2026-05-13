@@ -12,6 +12,9 @@ import domain.util.interfaces.HabilidadEspecial;
 
 public class Arquero extends Personaje implements HabilidadEspecial {
 
+    private final int flechasMaximas;
+    private int flechasActuales;
+
     public Arquero(
             String nombrePersonaje,
             int vidaMaxima,
@@ -23,7 +26,9 @@ public class Arquero extends Personaje implements HabilidadEspecial {
             PoderPersonajes nombrePoder,
             HabilidadClase habilidadClase,
             int poderAtaque,
-            int defensa) {
+            int defensa,
+            int flechasMaximas,
+            int flechasActuales) {
         super(nombrePersonaje,
                 vidaMaxima,
                 vidaActual,
@@ -35,79 +40,121 @@ public class Arquero extends Personaje implements HabilidadEspecial {
                 habilidadClase,
                 poderAtaque,
                 defensa);
+        this.flechasMaximas = flechasMaximas;
+        this.flechasActuales = flechasActuales;
+    }
+
+    public int getFlechasActuales() {
+        return flechasActuales;
+    }
+
+    public int getFlechasMaximas() {
+        return flechasMaximas;
+    }
+
+    public void setFlechasActuales(int flechasActuales) {
+        this.flechasActuales = flechasActuales;
+    }
+
+    public void restarFlechas(int cantidad) {
+        flechasActuales -= cantidad;
+        System.out.println("Flechas restantes: " + flechasActuales + "/" + flechasMaximas);
+    }
+
+    public boolean controlFlechas() {
+        if (flechasActuales == 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void atacar(Personaje enemigo) {
-        System.out.println("Flecha disparada\n");
+        if (getFlechasActuales() <= 0) {
+            System.out.println("¡No puedes atacar! Te has quedado sin flechas.");
+            return;
+        }
 
+        System.out.println("Flecha disparada");
+        restarFlechas(1);
         enemigo.recibirDanio(getPoderAtaque());
     }
 
     @Override
-public void usarHabilidadEspecial(Personaje enemigo, TiposPersonajes tiposPersonajes) {
-    int probabilidad = ThreadLocalRandom.current().nextInt(100); 
+    public void usarHabilidadEspecial(Personaje enemigo, TiposPersonajes tiposPersonajes) {
+        if (controlFlechas()) {
+            System.out.println("No tienes flechas, recarga");
+            return;
+        }
+        int probabilidad = ThreadLocalRandom.current().nextInt(100);
 
-    switch (tiposPersonajes) {
-        case BASTO: 
-            if (probabilidad < 70) {
-                int dañoTotal = (int) ((getPoderAtaque() * 0.75) * 3);
-                System.out.println("TRIFUERZA: Disparas tres flechas bendecidas.");
-                enemigo.recibirDanio(dañoTotal);
-            } else {
-                System.out.println("Trifuerza fallida");
-            }
-            break;
+        switch (tiposPersonajes) {
+            case BASTO:
+                if (probabilidad < 70) {
+                    int dañoTotal = (int) ((getPoderAtaque() * 0.75) * 3);
+                    System.out.println("TRIFUERZA: Disparas tres flechas bendecidas.");
+                    enemigo.recibirDanio(dañoTotal);
+                    restarFlechas(3);
+                } else {
+                    System.out.println("Trifuerza fallida");
+                }
+                break;
 
-        case ORO: 
-            if (probabilidad < 50) {
-                int danioTotal = getPoderAtaque() + enemigo.getDefensa(); 
-                System.out.println("OJO DE HALCÓN penetro la armadura");
-                enemigo.recibirDanio(danioTotal);
-            } else {
-                System.out.println("Ojo de halcón no sirvio");
-            }
-            break;
+            case ORO:
+                if (probabilidad < 50) {
+                    int danioTotal = getPoderAtaque() + enemigo.getDefensa();
+                    System.out.println("OJO DE HALCÓN penetro la armadura");
+                    enemigo.recibirDanio(danioTotal);
+                    restarFlechas(1);
+                } else {
+                    System.out.println("Ojo de halcón no sirvio");
+                }
+                break;
 
-        case ESPADA:
-            if (probabilidad < 20) {
-                int numFlechas = ThreadLocalRandom.current().nextInt(1, 6);
-                int dañoRafaga = getPoderAtaque() * numFlechas;
-                System.out.println("🌪️ ¡RÁFAGA! Has disparado " + numFlechas + " flechas seguidas.");
-                enemigo.recibirDanio(dañoRafaga);
-            } else {
-                System.out.println("Rafaga fallida");
-            }
-            break;
+            case ESPADA:
+                if (probabilidad < 20) {
+                    int numFlechas = ThreadLocalRandom.current().nextInt(1, 6);
+                    int dañoRafaga = getPoderAtaque() * numFlechas;
+                    System.out.println("🌪️ ¡RÁFAGA! Has disparado " + numFlechas + " flechas seguidas.");
+                    enemigo.recibirDanio(dañoRafaga);
+                    restarFlechas(numFlechas);
+                } else {
+                    System.out.println("Rafaga fallida");
+                }
+                break;
 
-        case COPA:
-            if (probabilidad < 50) {
-                System.out.println("El enemigo ha sido aturdido");
-                enemigo.setEstadoPersonaje(domain.enums.EstadoPersonaje.ATURDIDO);
-                enemigo.recibirDanio((int)(getPoderAtaque() / 4));
-            } else {
-                System.out.println("El enemigo no fue aturdido");
-            }
-            break;
-        default:
-            break;
+            case COPA:
+                if (probabilidad < 50) {
+                    System.out.println("El enemigo ha sido aturdido");
+                    enemigo.setEstadoPersonaje(domain.enums.EstadoPersonaje.ATURDIDO);
+                    enemigo.recibirDanio((int) (getPoderAtaque() / 4));
+                    restarFlechas(1);
+                } else {
+                    System.out.println("El enemigo no fue aturdido");
+                }
+                break;
+            default:
+                break;
+        }
     }
-}
 
     @Override
     public void poderMagico(Personaje objetivo) {
         if (ThreadLocalRandom.current().nextBoolean()) {
-            System.out.println("Rafaga de flechas");
-            objetivo.recibirDanio(ThreadLocalRandom.current().nextInt(6) * getPoderAtaque());
+            System.out.println("Recarga exitosa");
+            this.flechasActuales = flechasMaximas;
             return;
         }
-        System.out.println("Arquero: Fallo al disparar");
+        System.out.println("Arquero: Fallo al recargar");
     }
 
     // Impresion de datos
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() +
+                "\n Flechas maximas: " + flechasMaximas +
+                "\n Flechas actuales: " + flechasActuales +
+                "\n";
     }
 
 }

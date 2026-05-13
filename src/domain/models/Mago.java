@@ -12,6 +12,9 @@ import domain.util.interfaces.HabilidadEspecial;
 
 public class Mago extends Personaje implements HabilidadEspecial {
 
+    private final int manaMax;
+    private int manaActual;
+
     public Mago(String nombrePersonaje,
             int vidaMaxima,
             int vidaActual,
@@ -22,7 +25,9 @@ public class Mago extends Personaje implements HabilidadEspecial {
             PoderPersonajes nombrePoder,
             HabilidadClase habilidadClase,
             int poderAtaque,
-            int defensa) {
+            int defensa,
+            int manaMax,
+            int manaActual) {
         super(nombrePersonaje,
                 vidaMaxima,
                 vidaActual,
@@ -34,7 +39,48 @@ public class Mago extends Personaje implements HabilidadEspecial {
                 habilidadClase,
                 poderAtaque,
                 defensa);
+                this.manaMax = manaMax;
+                this.manaActual = manaActual;
 
+    }
+
+    public int getManaActual() {
+        return manaActual;
+    }
+
+    public int getManaMax() {
+        return manaMax;
+    }
+
+    public void setManaActual(int manaActual) {
+        this.manaActual = manaActual;
+    }
+
+    public void recuperarManaMago() {
+        this.setManaActual(getManaActual() + 15);
+        controlarMana();
+    }
+
+    public void controlarMana() {
+        if (manaActual > manaMax) {
+            this.manaActual = manaMax;
+        }
+    }
+
+    public boolean medidorMana(int minimo) {
+        if (manaActual < minimo) {
+            return false;
+        }
+        manaActual -= minimo;
+        System.out.println("Mana gastado: " + minimo + " | Mana restante: " + manaActual + "/" + manaMax);
+        return true;
+    }
+
+    public String lanzadorResultadosMana(boolean YoN) {
+        if (YoN) {
+            return "No se cuenta con el suficiente mana";
+        }
+        return "Se cuenta con el suficiente mana";
     }
 
     @Override
@@ -50,6 +96,10 @@ public class Mago extends Personaje implements HabilidadEspecial {
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
         if (tiposPersonajes == TiposPersonajes.ORO || tiposPersonajes == TiposPersonajes.COPA) {
+            if (!medidorMana(40)) {
+                System.out.println(lanzadorResultadosMana(true));
+                return;
+            }
             int multiplicador = random.nextInt(1, 6);
             int dañoTotal = getPoderAtaque() * multiplicador;
             int dañoRecibido = dañoTotal / 2;
@@ -61,6 +111,10 @@ public class Mago extends Personaje implements HabilidadEspecial {
             this.recibirDanio(dañoRecibido);
 
         } else {
+            if (!medidorMana(50)) {
+                System.out.println(lanzadorResultadosMana(true));
+                return;
+            }
             System.out.println("Preparando autocuracion");
             int dañoRealizado = getPoderAtaque();
             objetivo.recibirDanio(dañoRealizado);
