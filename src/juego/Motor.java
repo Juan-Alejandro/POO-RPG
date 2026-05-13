@@ -45,7 +45,7 @@ public class Motor {
             550,
             160,
             100,
-            10);
+            100);
 
     static Mago mago = new Mago("Mago",
             140,

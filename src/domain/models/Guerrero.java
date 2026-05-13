@@ -71,6 +71,7 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
 
     public boolean medidorEstamina(int minimo) {
         if (estaminaActual < minimo) {
+            System.out.println(lanzadorResultados(true));
             return false;
         }
         estaminaActual -= minimo;
@@ -80,29 +81,28 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
 
     public String lanzadorResultados(boolean YoN) {
         if (YoN) {
-            return "No se cuenta con la suficiente estamina";
+            return "¡" + getNombrePersonaje() + " no tiene suficiente estamina!";
         }
         return "Se cuenta con la suficiente estamina";
-
     }
 
     @Override
     public void atacar(Personaje enemigo) {
-        System.out.println("Golpe de arma");
-        enemigo.recibirDanio(getPoderAtaque());
+        if (medidorEstamina(10)) {
+            System.out.println("Golpe de arma");
+            enemigo.recibirDanio(getPoderAtaque());
+        }
     }
 
     @Override
     public void usarHabilidadEspecial(Personaje enemigo, TiposPersonajes tiposPersonajes) {
-        int probabilidad = java.util.concurrent.ThreadLocalRandom.current().nextInt(100);
+        int probabilidad = ThreadLocalRandom.current().nextInt(100);
         int danioBase = getPoderAtaque();
 
         switch (tiposPersonajes) {
             case ORO:
-                if (!medidorEstamina(30)) {
-                    System.out.println(lanzadorResultados(true));
-                    return;
-                }
+                if (!medidorEstamina(30)) return;
+                
                 if (probabilidad < 40) {
                     System.out.println("Se le ha hecho el triple de daño al enemigo");
                     enemigo.recibirDanio(danioBase * 3);
@@ -114,10 +114,8 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
                 break;
 
             case ESPADA:
-                if (!medidorEstamina(60)) {
-                    System.out.println(lanzadorResultados(true));
-                    return;
-                }
+                if (!medidorEstamina(60)) return;
+
                 if (probabilidad < 30) {
                     System.out.println("Golpe acertado, pero pierdes 10% de tu vida");
                     enemigo.recibirDanio(danioBase * 3);
@@ -129,24 +127,20 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
                 break;
 
             case COPA:
-                if (!medidorEstamina(20)) {
-                    System.out.println(lanzadorResultados(true));
-                    return;
-                }
+                if (!medidorEstamina(20)) return;
+
                 if (probabilidad < 70) {
                     System.out.println("Has aturdido al enemigo y a ti mismo");
-                    enemigo.setEstadoPersonaje(domain.enums.EstadoPersonaje.ATURDIDO);
-                    this.setEstadoPersonaje(domain.enums.EstadoPersonaje.ATURDIDO);
+                    enemigo.setEstadoPersonaje(EstadoPersonaje.ATURDIDO);
+                    this.setEstadoPersonaje(EstadoPersonaje.ATURDIDO);
                 } else {
                     System.out.println("Ninguno fue aturdido");
                 }
                 break;
 
             case BASTO:
-                if (!medidorEstamina(90)) {
-                    System.out.println(lanzadorResultados(true));
-                    return;
-                }
+                if (!medidorEstamina(90)) return;
+
                 int bonusDanio = getVidaMaxima() - getVidaActual();
                 int danioTotal = danioBase + bonusDanio;
                 System.out.println("Tienes un bonus de daño debido a la vida perdida y es de: " + bonusDanio);
@@ -159,18 +153,22 @@ public class Guerrero extends Personaje implements HabilidadEspecial {
 
     @Override
     public void poderMagico(Personaje objetivo) {
-        int probabilidad = ThreadLocalRandom.current().nextInt(100);
-        if (probabilidad < 50) {
-            objetivo.recibirDanio(this.getPoderAtaque() * 2);
+        if (medidorEstamina(30)) {
+            int probabilidad = ThreadLocalRandom.current().nextInt(100);
+            if (probabilidad < 50) {
+                System.out.println("¡Poder Mágico activado!");
+                objetivo.recibirDanio(this.getPoderAtaque() * 2);
+            } else {
+                System.out.println("El poder mágico falló");
+            }
         }
     }
 
     @Override
     public String toString() {
         return super.toString() +
-                "\nEstamina maxima: " + estaminaMax +
-                "\nEstamina actual: " + estaminaActual +
+                "\n Estamina maxima: " + estaminaMax +
+                "\n Estamina actual: " + estaminaActual +
                 "\n";
     }
-
 }
