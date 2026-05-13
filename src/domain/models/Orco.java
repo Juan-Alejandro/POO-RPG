@@ -62,7 +62,7 @@ public class Orco extends Personaje implements HabilidadEspecial {
             return;
         }
 
-        System.out.println("Orco: No funciono mi habilidad.....");
+       
     }
 
     @Override
