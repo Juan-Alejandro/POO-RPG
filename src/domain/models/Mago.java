@@ -86,7 +86,7 @@ public class Mago extends Personaje implements HabilidadEspecial {
     @Override
     public void atacar(Personaje enemigo) {
         System.out.println("Fireball ");
-
+        medidorMana(10);
         enemigo.recibirDanio(getPoderAtaque());
 
     }
@@ -130,6 +130,7 @@ public class Mago extends Personaje implements HabilidadEspecial {
 
     @Override
     public void poderMagico(Personaje objetivo) {
+        medidorMana(50);
         int probabilidad = ThreadLocalRandom.current().nextInt(100);
         if (probabilidad < 50) {
             objetivo.curarVida(10);
